@@ -11,7 +11,7 @@ ABombJackHero::ABombJackHero()
 	PrimaryActorTick.bCanEverTick = true;
 	
 	//For Spring Arm
-	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("MySpringArm"));
+	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(GetRootComponent());
 	
 	SpringArm->bUsePawnControlRotation = true;
@@ -21,7 +21,7 @@ ABombJackHero::ABombJackHero()
 	SpringArm-> TargetArmLength = 2000.0f;
 	
 	//For camera 
-	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("MyCamera"));
+	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
 	
 	Camera->SetRelativeLocation(FVector(0.0f, 0.0f, 8.492264f));
