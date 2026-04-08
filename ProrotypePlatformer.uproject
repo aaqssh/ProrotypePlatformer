@@ -3,16 +3,6 @@
 	"EngineAssociation": "5.7",
 	"Category": "",
 	"Description": "",
-	"Modules": [
-		{
-			"Name": "ProrotypePlatformer",
-			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"Engine"
-			]
-		}
-	],
 	"Plugins": [
 		{
 			"Name": "ModelingToolsEditorMode",
@@ -27,10 +17,6 @@
 		},
 		{
 			"Name": "Landmass",
-			"Enabled": true
-		},
-		{
-			"Name": "CQTestEnhancedInput",
 			"Enabled": true
 		}
 	]
