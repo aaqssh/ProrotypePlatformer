@@ -13,6 +13,8 @@ ABombJackHero::ABombJackHero()
 	//For Spring Arm
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(GetRootComponent());
+	SpringArm->SetRelativeLocation(FVector(0.0f, 0.0f, 8.49220f));
+	SpringArm->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 	
 	SpringArm->bUsePawnControlRotation = true;
 	SpringArm->bInheritPitch = false;
@@ -25,7 +27,7 @@ ABombJackHero::ABombJackHero()
 	Camera->SetupAttachment(SpringArm);
 	
 	Camera->SetRelativeLocation(FVector(0.0f, 0.0f, 8.492264f));
-	Camera->SetRelativeRotation(FRotator(0.0f, 0.0f, -90.0f));
+	
 	
 	//Just fixing max speed to 500 and additional default setting change to true
 	GetCharacterMovement()->MaxWalkSpeed=500.0f;
