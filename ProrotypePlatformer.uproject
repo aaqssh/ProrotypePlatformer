@@ -3,17 +3,6 @@
 	"EngineAssociation": "5.7",
 	"Category": "",
 	"Description": "",
-	"Modules": [
-		{
-			"Name": "ProrotypePlatformer",
-			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"Engine",
-				"AIModule"
-			]
-		}
-	],
 	"Plugins": [
 		{
 			"Name": "ModelingToolsEditorMode",
