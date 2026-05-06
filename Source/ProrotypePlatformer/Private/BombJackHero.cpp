@@ -16,7 +16,7 @@ ABombJackHero::ABombJackHero()
 	SpringArm->SetRelativeLocation(FVector(0.0f, 0.0f, 8.49220f));
 	SpringArm->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 	
-	SpringArm->bUsePawnControlRotation = true;
+	SpringArm->bUsePawnControlRotation = false;
 	SpringArm->bInheritPitch = false;
 	SpringArm->bInheritYaw = false;
 	SpringArm->bInheritRoll = true;
@@ -32,6 +32,11 @@ ABombJackHero::ABombJackHero()
 	//Just fixing max speed to 500 and additional default setting change to true
 	GetCharacterMovement()->MaxWalkSpeed=500.0f;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
+	GetCharacterMovement()->JumpZVelocity=1500.0f;
+	GetCharacterMovement()->AirControl=0.35f;
+	//Rotates player backward to walk 
+	bUseControllerRotationYaw = false;
+	
 }
 
 // After setting Enhanced Input then this 
@@ -69,8 +74,13 @@ void ABombJackHero::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
 	if (EnhancedInputComponent)
 	{
+		//for moving
 		EnhancedInputComponent->BindAction(MoveAction,ETriggerEvent::Triggered, this, &ABombJackHero::Move);
+	   // Jumping and stop jump
+		EnhancedInputComponent->BindAction(JumpAction,ETriggerEvent::Started, this, &ABombJackHero::Jump);
+		EnhancedInputComponent->BindAction(JumpAction,ETriggerEvent::Completed, this, &ABombJackHero::StopJumping);
 	}
+	
 
 }
 
@@ -78,7 +88,21 @@ void ABombJackHero::Move(const FInputActionValue& Value)
 {
 	FVector2D RCVValue = Value.Get<FVector2D>();
 	
-	FRotator ControlRotation = GetControlRotation();
-	FVector FrontVector = FRotationMatrix(FRotator(0,ControlRotation.Yaw,0)).GetUnitAxis(EAxis::X);
-	AddMovementInput(FrontVector,RCVValue.Y);
+	if (Controller)
+	{
+		const FRotator ControlRotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0,ControlRotation.Yaw,0);
+		
+		const FVector Forward = -FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		//const FVector Right = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+		
+		AddMovementInput(Forward,RCVValue.Y);
+		//AddMovementInput(Right,RCVValue.X);
+		
+		//FVector FrontVector = FRotationMatrix(FRotator(0,ControlRotation.Yaw,0)).GetUnitAxis(EAxis::X);
+		//AddMovementInput(FrontVector,RCVValue.Y);
+		
+	}
+
 }
+
